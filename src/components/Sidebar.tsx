@@ -33,6 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     { id: 'payments', label: isFaculty ? 'Payments View' : 'Payments & Dues', icon: 'payments' },
     { id: 'idcard', label: 'ID Card Portal', icon: 'badge' },
     { id: 'referrals', label: 'Referrals', icon: 'share' },
+    { id: 'documents', label: 'Documents', icon: 'description' },
   ];
 
   // Filter based on permissions matrix

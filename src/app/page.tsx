@@ -8,6 +8,7 @@ import FacultyDashboard from '@/components/FacultyDashboard';
 import MembersRoster from '@/components/MembersRoster';
 import IDCard from '@/components/IDCard';
 import Referrals from '@/components/Referrals';
+import OfferLetter from '@/components/OfferLetter';
 import Tickets from '@/components/Tickets';
 import Payments from '@/components/Payments';
 import Footer from '@/components/Footer';
@@ -206,7 +207,7 @@ function AppContent() {
   };
 
   const isSectionLocked = (sectionKey: string): boolean => {
-    if (sectionKey === 'dashboard' || sectionKey === 'superadmin') return false;
+    if (sectionKey === 'dashboard' || sectionKey === 'superadmin' || sectionKey === 'documents' || sectionKey === 'offer_letter') return false;
     const perm = getPagePermission(sectionKey);
     // If the role/tier has bypassMaintenance granted by Super Admin, never lock
     if (perm.bypassMaintenance) return false;
@@ -216,7 +217,7 @@ function AppContent() {
   };
 
   const isSectionUnderMaintenanceForAdmin = (sectionKey: string): boolean => {
-    if (sectionKey === 'dashboard' || sectionKey === 'superadmin') return false;
+    if (sectionKey === 'dashboard' || sectionKey === 'superadmin' || sectionKey === 'documents' || sectionKey === 'offer_letter') return false;
     return !!(maintenanceConfig.all || maintenanceConfig.enabled || maintenanceConfig.sections?.[sectionKey]);
   };
 
@@ -236,7 +237,7 @@ function AppContent() {
       const path = window.location.pathname.replace(/^\//, '');
       const params = new URLSearchParams(window.location.search);
       const tabParam = params.get('tab');
-      const validPaths = ['referrals', 'idcard', 'payments', 'dashboard', 'members', 'planned_events', 'superadmin'];
+      const validPaths = ['referrals', 'idcard', 'payments', 'dashboard', 'members', 'planned_events', 'superadmin', 'documents'];
 
       if (path && validPaths.includes(path)) {
         setActivePage(path);
@@ -274,6 +275,7 @@ function AppContent() {
       case 'idcard': return 'ID Card Portal';
       case 'payments': return isFaculty ? 'Faculty Payments Ledger' : 'Payments & Dues Portal';
       case 'superadmin': return 'Super Admin Enclave';
+      case 'documents': return 'Documents';
       case 'tickets': return 'Tickets';
       default: return 'Command Center';
     }
@@ -578,6 +580,14 @@ function AppContent() {
               />
             ) : (
               renderRestrictedSignIn('Payments & Dues')
+            )
+          )}
+
+          {activePage === 'documents' && getPagePermission('documents').canView && (
+            isAuthorized ? (
+              <OfferLetter onPageChange={handlePageChange} />
+            ) : (
+              renderRestrictedSignIn('Documents')
             )
           )}
 
