@@ -99,6 +99,12 @@ const Navbar: React.FC<NavbarProps> = ({
       onClick: () => handleMobileNavClick('referrals'),
     },
     {
+      id: 'documents',
+      label: 'Documents',
+      icon: 'description',
+      onClick: () => handleMobileNavClick('documents'),
+    },
+    {
       id: 'contact',
       label: 'Contact Us & Support',
       icon: 'contact_support',
